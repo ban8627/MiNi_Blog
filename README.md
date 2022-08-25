@@ -1,4 +1,4 @@
-# miniblog
+# Mini_blog from Vue Project
 
 ## Project setup
 ```
