@@ -18,6 +18,8 @@
         let temp = newItem.value;
         // 앞 뒤 공백 제거
         temp = temp.trim();
+        // 추후 업데이트 예정(정규표현식 - 문자열체크 문법)
+        // 앞자리 공백 공백 뒷자리 공백
         if (temp !== '') {
           localStorage.setItem(temp, temp);
           resetItem();
@@ -25,8 +27,10 @@
         alert('내용 입력해야지?')
         }
         // localStorage.setItem(키,값)
+        // 추후 json 형태로 만들어서 저장
+        // json 저장 문자열 Json.stringify(오브젝트)
         // localStorage.setItem(키, json 문자열로 저장)
-        // json 저장 문자열
+        
         /* { completed:false,  title:제목이지?, 등:등 } */
       } 
       // 내용 재설정
