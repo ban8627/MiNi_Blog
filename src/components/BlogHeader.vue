@@ -1,5 +1,5 @@
 <template>
-  <header id="header" class="header">
+  <header class="header">
     <h1>Header</h1>
   </header>
 </template>
@@ -11,10 +11,8 @@ export default {
 </script>
 
 <style scoped>
-  .header {
-    position: relative;
-    display: block;
+  h1 {
+    font-weight: 700;
     text-align: center;
-    margin:20px 0;
   }
-</style>
+</style>>

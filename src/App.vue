@@ -4,6 +4,7 @@
     <BlogInput @additem ="addMemo"/>
     <BlogList v-bind:memodata="memoItemArr" @removeitem="deleteMemo" v-on:updateitem="updateMemo"/>
     <BlogFooter @deleteitem="clearMemo"/>
+    <IntroView @closeintro="hideIntro" v-if="introShow"/>
   </div>
 </template>
 
@@ -13,12 +14,14 @@ import BlogHeader from '@/components/BlogHeader.vue'
 import BlogInput from '@/components/BlogInput.vue'
 import BlogList from '@/components/BlogList.vue'
 import BlogFooter from '@/components/BlogFooter.vue'
+import IntroView from '@/components/IntroView.vue'
 export default {
   components: {
     BlogHeader,
     BlogInput,
     BlogList,
-    BlogFooter
+    BlogFooter,
+    IntroView
   },
   setup() {
      // localstorage 의 목록을 가지고 오기    
@@ -37,22 +40,24 @@ export default {
       // memoItemArr.sort();
     }
     const deleteMemo = (item, index) => {
-      console.log(item);
-      console.log(index);
       // localStrage 에서 key를 통해서 지운다.
       localStorage.removeItem(item);
       // 배열(memoItemArr) 에서도 지운다.
       memoItemArr.splice(index, 1);
     }
-    const updateMemo = (item) => {
+
+    const updateMemo = (item, index) => {
       // localStorage 에서는 update 메소드를 지원하지 않습니다.
       // 찾아서 지우고, 
       localStorage.removeItem(item.id);
       // 변경한다.
-      item.complete = !item.complete;
+      // item.complete = !item.complete;
+      memoItemArr[index].complete = !memoItemArr[index].complete;
       // 다시 set 한다.
       localStorage.setItem(item.id, JSON.stringify(item));
+
     }
+
     // 현재 시간값을 계산해서 중복이 되지 않는 값을 처리한다.
     // 용도는 key 와 id 를 생성해 주기 위해서 처리      
     // 10보다 작은 값에 0을 붙임
@@ -65,88 +70,100 @@ export default {
       return date.getFullYear().toString() + addZero(date.getMonth() + 1) + addZero(date.getDate()) +
         addZero(date.getHours()) + addZero(date.getMinutes()) + addZero(date.getSeconds());              
     }
-    const addMemo = (item) => {
+    
+    const getCurrentTime= () => {
+      let date = new Date();
+      return date.getFullYear().toString() + '/' + addZero(date.getMonth() + 1) + '/' + addZero(date.getDate()) + '/' +
+        addZero(date.getHours()) + ':' + addZero(date.getMinutes());              
+    }
+
+    const iconArr = ['dog1.png', 'dog2.png', 'str.png'];
+
+    const addMemo = (item, index) => {
         // json 저장 문자열
         ///{completed:false, title:메모내용, icon:파일명 ....}
+        // 아이콘 관련 처리
         let memoTemp = {
           id: getCurrentDate(),
           complete: false,
-          memotitle: item
+          memotitle: item,
+          memodate: getCurrentTime(),
+          memoicon: iconArr[index]
         };
         // 추후 실제 DB 연동 예정
         localStorage.setItem(memoTemp.id, JSON.stringify(memoTemp));
         // 화면갱신을 위한 배열 요소 추가
         memoItemArr.push(memoTemp);
     }
+
     const clearMemo = () => {
       // localStorage 에서 내용 전체 삭제
       // 추후 DB 연동 예정
       localStorage.clear();
       memoItemArr.splice(0);
     }
+
+    const introShow = ref(true);
+    const hideIntro = () => {
+      introShow.value = false;
+    }
+
     return {  
       memoItemArr,
       deleteMemo,
       updateMemo,
       addMemo,
-      clearMemo
+      clearMemo,
+      hideIntro,
+      introShow
     }
   }
 }
 </script>
 
 <style>
-  @charset "utf-8";
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Song+Myung&family=Ubuntu:wght@400;500;700&display=swap');
+@charset 'utf-8';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;  
+}
+ul, li {
+  list-style: none;
+}
+img {
+  vertical-align: middle;
+  border: 0;
+}
+a {
+  color: #333;
+  text-decoration: none;
+}
+html {
+  font-size: 16px;
+  overflow-x:hidden;
+}
+body {
+  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.64;
+  color: #000;
+  background-color: #f6f6f6;
+}
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+.shadow {
+  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
+}
 
-  ul,
-  li {
-    list-style: none;
-  }
+.wrap {
+  position: relative;
+  display: block;
+  width: 90%;
+  margin: 0 auto;
+}
 
-  a {
-    text-decoration: none;
-    color: #333;
-  }
 
-  img {
-    border: 0;
-    vertical-align: middle;
-  }
-
-  html {
-    font-size: 16px;
-    overflow-x: hidden;
-  }
-
-  body {
-    font-family: 'Ubuntu', 'Noto Sans KR', sans-serif;
-    /* font-family: 'Song Myung', serif; */
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.2;
-    letter-spacing: -0.64px;
-    color:#000;
-    background-color: #f6f6f6;
-    padding:30px;
-  }
-
-  .shadow {
-    box-shadow: 5px 10px 10px rgba(0, 0, 0, .05);
-  }
-
-  .wrap {
-    position: relative;
-    display: block;
-    width:90%;
-    margin:0 auto;
-    border:2px solid rgba(0,0,0,.08);
-    border-radius: 10px;
-  }
 </style>

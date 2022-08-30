@@ -1,93 +1,95 @@
 <template>
   <div class="list-wrap">
     <ul>
-        <li v-for="(item, index) in memodata" :key="index" class="shadow"> 
-          <i class="fas fa-check-circle check-bt" @click="updateMemo(item)" :class="{memoComplete:item.complete}"></i>
+        <li v-for="(item, index) in memodata" v-bind:key="index" class="shadow"> 
+          
+          <i class="fas fa-check-circle check-bt" @click="updateMemo(item, index)" :class="{memoComplete:item.complete}"></i>
+          
           <span :class="{memoCompleteTxt:item.complete}"> {{item.memotitle}} </span>
-          <span class="remove-bt" @click="removeMemo(item.id, index)">
-            <i class="fas fa-trash"></i>
-          </span>
+          
+          <div class="info">
+            <span class="icon" :style="{backgroundImage:'url(' + require(`@/assets/images/${item.memoicon}`) + ')'}"></span>            
+            <span class="date">{{item.memodate}}</span>
+            <span class="remove-bt" @click="removeMemo(item.id, index)">
+              <i class="fas fa-trash"></i>
+            </span>
+          </div>
+
+
         </li>  
     </ul>
+
   </div>
 </template>
 
 <script>
+
 export default {  
   props: ['memodata'],
   setup(props, context) {
+
     const removeMemo = (item, index) => {
       context.emit('removeitem', item, index);
     }
-    const updateMemo = (item) => {      
-      context.emit("updateitem", item);
+
+    const updateMemo = (item, index) => {      
+      context.emit("updateitem", item, index);
     }
+
     return {            
       removeMemo,
       updateMemo
     }
+
   }
 }
 </script>
 
 <style scoped>
-  .list-wrap {
-    width: 50%;
-    margin: 30px auto;
-  }
-
-  .list-wrap ul {
+  li {
     display: flex;
-    flex-wrap: wrap;
-  }
-
-  .list-wrap ul li {
-    position: relative;
-    display: block;
-    width: calc((100% / 3) - 6px);
-    height: 60px;
-    border: 1px solid rgba(0, 0, 0, 0.03);
-    padding: 20px 15px;
-    margin-right: 5px;
-    margin-bottom: 30px;
-    text-align: left;
-    white-space: nowrap;
-    border-radius: 8px;
+    min-height: 50px;
+    line-height: 50px;
+    margin: 10px 0;
     background-color: #fff;
-    transition: all .5s;
+    border-radius: 5px;
+    padding: 0 20px;
   }
 
+  .info {
+    margin-left: auto;
+  }
+  .icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;  
+  }
+  .date {
+  }
   .remove-bt {
     cursor: pointer;
-    float: right;
-    margin-right: 5px;
-    color: rgba(5, 116, 5, 0.8)
-  }
-
-  .list-wrap ul li:hover {
-    background-color: rgba(255, 0, 0, 1);
-    color: #fff;
-    font-size: 18px;
+    margin-left: 10px;
+    color: hotpink;
   }
 
   .check-bt {
-    margin-right: 15px;
+    color: #62acde;
+    line-height: 50px;
+    margin-right: 10px;
     cursor: pointer;
-    font-size: 18px;
-    color: rgba(5, 116, 5, 0.8)
-  }
-
-  .list-wrap ul li:hover .remove-bt,
-  .list-wrap ul li:hover .check-bt {
-    color: #fff;
   }
 
   .memoComplete {
-    color: red;
+    color: #b3adad;
   }
 
   .memoCompleteTxt {
-    color: #ddd;
+    color: #b3adad;
     text-decoration: line-through;
   }
+
 </style>
