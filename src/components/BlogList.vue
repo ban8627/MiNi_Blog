@@ -1,6 +1,6 @@
 <template>
   <div class="list-wrap">
-    <ul>
+    <TransitionGroup name="list" tag="ul">
         <li v-for="(item, index) in memodata" v-bind:key="index" class="shadow"> 
           
           <i class="fas fa-check-circle check-bt" @click="updateMemo(item, index)" :class="{memoComplete:item.complete}"></i>
@@ -17,7 +17,7 @@
 
 
         </li>  
-    </ul>
+    </TransitionGroup>
 
   </div>
 </template>
@@ -92,4 +92,14 @@ export default {
     text-decoration: line-through;
   }
 
+/* 애니메이션git  */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
 </style>

@@ -102,8 +102,8 @@ export default {
       localStorage.clear();
       memoItemArr.splice(0);
     }
-
-    const introShow = ref(true);
+  // 인트로 보여질 유무
+    const introShow = ref(false);
     const hideIntro = () => {
       introShow.value = false;
     }
