@@ -67,7 +67,7 @@ body {
   line-height: 1.2;
   letter-spacing: -0.64;
   color: #000;
-  background-color: #f6f6f6;
+  background-color: #434343;
 }
 
 .shadow {

@@ -1,21 +1,23 @@
 <template>
   <div class="input-wrap shadow">
-    <input type="text" v-model="newItem" class="input-box" maxlength="30" @keyup.enter="addItem">
-
-    <div class="option">
-      <span @click="addIcon(0)" class="img1">
-        이미지1
-      </span>
-      <span @click="addIcon(1)" class="img2">
-        이미지2
-      </span>
-      <span @click="addIcon(2)" class="img3">
-        이미지2
-      </span>
-
-      <span @click="addItem" class="add-bt">
-        <i class="fas fa-plus add-bt-icon"></i>
-      </span>
+    <div class="input-inner">
+      <input type="text" v-model="newItem" class="input-box" maxlength="30" @keyup.enter="addItem" placeholder="내용 넣어야지?">
+  
+      <div class="option">
+        <span @click="addIcon(0)" class="img1">
+          이미지1
+        </span>
+        <span @click="addIcon(1)" class="img2">
+          이미지2
+        </span>
+        <span @click="addIcon(2)" class="img3">
+          이미지2
+        </span>
+  
+        <span @click="addItem" class="add-bt">
+          <i class="fas fa-plus add-bt-icon"></i>
+        </span>
+      </div>
     </div>
     <!-- 안내창 -->
     <ModalVue :show="showModal" @closemodal="showModal=false">
@@ -87,18 +89,31 @@
   .input-wrap {
     position: relative;
     display: block;
-    height: 50px;
-    line-height: 50px;
-    border-radius: 5px;
-    background-color: #fff;
+    width:80%;
+    height: 60px;
+    line-height: 58px;
+    border-radius: 15px;
+    background-color: rgb(0, 0, 0);
     overflow: hidden;
-    margin: 20px 0;
+    margin: 20px auto;
+    color:#fff;
   }
-
+  .input-inner {
+    position: relative;
+    width:100%;
+    margin:0 auto;
+    border:1px solid #fff;
+    border-radius: 15px;
+  }
   .input-wrap input {
     border-style: none;
+    color:#fff;
+    background-color: #000;
+    padding:0 30px;
   }
-
+  .input-wrap input::placeholder {
+    color:rgb(174, 174, 174);
+  }
   .input-wrap input:focus {
     outline: none;
   }
@@ -119,7 +134,7 @@
   .img1:active,
   .img2:active,
   .img3:active {
-    outline: 3px solid hotpink;
+    outline: 3px solid #fff;
   }
 
   .img1 {
@@ -154,14 +169,15 @@
 
   .add-bt {
     display: inline-block;
-    background-color: hotpink;
+    background-color: #fff;
     cursor: pointer;
+    border-radius: 0 15px 15px 0;
   }
 
   .add-bt-icon {
     display: inline-block;
     vertical-align: middle;
-    color: #fff;
+    color: #000;
     margin: 0 20px;
   }
 </style>

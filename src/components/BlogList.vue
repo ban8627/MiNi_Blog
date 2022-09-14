@@ -58,9 +58,10 @@ export default {
 <style scoped>
   li {
     display: flex;
+    width:80%;
     min-height: 50px;
     line-height: 50px;
-    margin: 10px 0;
+    margin: 10px auto;
     background-color: #fff;
     border-radius: 5px;
     padding: 0 20px;
