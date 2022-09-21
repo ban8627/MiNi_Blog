@@ -8,11 +8,12 @@
 import {ref} from 'vue';
 import {useStore} from 'vuex';
 export default {
-  setup(){
+
+  setup() {
     const title = ref('');
     const store = useStore();
-    title.value = store.state.headerText;
-    return{
+    title.value = store.state.headerText
+    return {
       title
     }
   }

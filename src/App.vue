@@ -1,9 +1,9 @@
 <template>
   <div class="wrap">
     <BlogHeader/>
-    <BlogInput />
-    <BlogList />
-    <BlogFooter />
+    <BlogInput/>
+    <BlogList/>
+    <BlogFooter/>
     <IntroView @closeintro="hideIntro" v-if="introShow"/>
   </div>
 </template>
@@ -24,12 +24,13 @@ export default {
     IntroView
   },
   setup() {
-  // 인트로 보여질 유무
+    // 첫화면(IntroView) 보여질 여부
     const introShow = ref(false);
     const hideIntro = () => {
       introShow.value = false;
     }
-    return {  
+  
+    return {   
       hideIntro,
       introShow
     }
@@ -67,7 +68,7 @@ body {
   line-height: 1.2;
   letter-spacing: -0.64;
   color: #000;
-  background-color: #434343;
+  background-color: #f6f6f6;
 }
 
 .shadow {
